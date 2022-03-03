@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/ReactEx/static/js/main.5db545e1.js",
+    "main.js": "/ReactEx/static/js/main.f27ba881.js",
     "index.html": "/ReactEx/index.html",
-    "main.5db545e1.js.map": "/ReactEx/static/js/main.5db545e1.js.map"
+    "main.f27ba881.js.map": "/ReactEx/static/js/main.f27ba881.js.map"
   },
   "entrypoints": [
-    "static/js/main.5db545e1.js"
+    "static/js/main.f27ba881.js"
   ]
 }
