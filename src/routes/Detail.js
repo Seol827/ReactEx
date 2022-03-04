@@ -1,33 +1,48 @@
 import { useState, useEffect } from "react";
-import {useParams} from "react-router-dom";
-import Movie from "../components/Movie";
-//App.js에서 /movie/:id 로 받아올 수 있는 파라미터 
+import { useParams } from "react-router-dom";
+//App.js에서 /movie/:id 로 받아올 수 있는 파라미터
+import MovieDetail from "../components/MovieDetail";
+
 
 function Detail() {
-    const[movie, setMovie] = useState([]);
-    const {id} = useParams();
+  const [loading, setLoading] = useState(true);
+  const [movie, setMovie] = useState([]);
+  const { id } = useParams();
 
-    const getMovie = async () => {
-        const json = await(
-            await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
-           ).json();
-           setMovie(json.data.movie);
-    };
+  const getMovie = async () => {
+    const json = await (
+      await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
+    ).json();
+    setMovie(json.data.movie);
+    setLoading(false);
+  };
 
-    useEffect(() => {
-        getMovie();
-    }, []);
+  useEffect(() => {
+    getMovie();
+    return () => setLoading(false); //cleanup
+  });
 
-    return (
-        <div>
-            <h1>This Movie</h1>
-                <img src={movie.medium_cover_image} />
-                <h2>Title : {movie.title}</h2>
-                <h3>{movie.summary}</h3>
-                <li>{movie.genres}</li>
-        </div>
-        
-    );
+  return (
+    <div>
+    {loading ? (
+      null
+    ) : (
+      <div>
+          <MovieDetail
+            key={movie.id}
+            id={movie.id}
+            coverImg={movie.medium_cover_image}
+            url={movie.url}
+            title={movie.title}
+            rating={movie.rating}
+            runtime={movie.runtime}
+            description_full={movie.description_full}
+            genres={movie.genres}
+          />
+      </div>
+    )}
+  </div>
+  );
 }
 
 export default Detail;
